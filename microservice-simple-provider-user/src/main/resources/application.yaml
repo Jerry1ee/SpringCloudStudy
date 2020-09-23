@@ -1,0 +1,67 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    #通用数据源配置
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?charset=utf8mb4&useSSL=false
+    username: root
+    password: 123456
+    # Hikari 数据源专用配置 Hikari 是Springboot用的连接池
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+    #初始化数据
+
+
+  # JPA 相关配置
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    hibernate:
+      # 慎用！
+#      ddl-auto: create
+#  注册到服务发现中心的名称
+  application:
+    name: microservice-simple-provider-user
+
+eureka:
+  client:
+    service-url:
+#      defaultZone: http://peer1:8761/eureka/, http://peer2:8762/eureka/
+      defaultZone: http://localhost:8761/eureka/
+#   将自己的IP注册到服务发现中心，如果为false，则注册所在操作系统的hostname
+  instance:
+    prefer-ip-address: true
+    metadata-map:
+      my-metadata: 我自定义的元数据
+
+logging:
+  level:
+    root: INFO
+    org.hibernate: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.type.descriptor.sql.Extractor: TRACE
+# 配置在日志中打印出执行的 SQL 语句信息。
+#spring.jpa.show-sql=true
+
+# 配置指明在程序启动的时候要删除并且创建实体类对应的表。这个参数很危险，因为他会把对应的表删除掉然后重建。
+# 所以千万不要在生成环境中使用。只有在测试环境中，一开始初始化数据库结构的时候才能使用一次。
+#spring.jpa.hibernate.ddl-auto=create
+
+# 在 SrpingBoot 2.0 版本中，Hibernate 创建数据表的时候，默认的数据库存储引擎选择的是 MyISAM。
+# 这个参数是在建表的时候，将默认的存储引擎切换为 InnoDB 用的。
+#spring.jpa.database-platform=org.hibernate.dialect.MySQL5InnoDBDialect
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator		#如果修改，则监管点访问路径前缀也会改变
+      exposure:
+        include: "*"  #星号代表暴露全部，可以选择暴露部分，填入想暴露的即可
+
+info:
+  app:
+    name:microservice-simple-provider-user
+

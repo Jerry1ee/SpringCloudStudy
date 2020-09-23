@@ -1,0 +1,50 @@
+#server:
+#  port: 8761
+#
+#eureka:
+#  client:
+##    默认交互地址
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+##      不要注册自己，因为自己就是server
+#    register-with-eureka: false
+##    不要同步注册服务列表，因为只有单节点
+#    fetch-registry: false
+
+
+spring:
+  application:
+    name: microservice-discovery-eureka-ha
+---
+spring:
+#  指定profiles 为 peer1
+  profiles: peer1
+
+server:
+  port: 8761
+
+eureka:
+  instance:
+#    指定 profile 为 peer1 时，hostname 为peer1
+    hostname: peer1
+  client:
+#    注册到 peer2上去
+    service-url:
+      defaultZone: http://peer2:8762/eureka/
+
+---
+spring:
+  #  指定profiles 为 peer2
+  profiles: peer2
+
+server:
+  port: 8762
+
+eureka:
+  instance:
+    #    指定 profile 为 peer2 时，hostname 为peer2
+    hostname: peer2
+  client:
+    #    注册到 peer1上去
+    service-url:
+      defaultZone: http://peer1:8761/eureka/
