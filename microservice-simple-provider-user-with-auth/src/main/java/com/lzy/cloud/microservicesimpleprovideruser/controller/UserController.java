@@ -31,7 +31,7 @@ public class UserController {
                 UserController.LOGGER.info("当前用户是{},角色是{}",user.getUsername(),c.getAuthority());
             }
         }else{
-
+            //do other things
         }
         Optional<User> findOne = userDao.findById(id);
         User result = findOne.get();

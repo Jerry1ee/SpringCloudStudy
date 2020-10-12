@@ -20,3 +20,6 @@ eureka:
   #   将自己的IP注册到服务发现中心，如果为false，则注册所在操作系统的hostname
   instance:
     prefer-ip-address: true
+logging:
+  level:
+    com.lzy.cloud.microservicesimpleconsumermovie.feign.UserFeignClient: DEBUG
