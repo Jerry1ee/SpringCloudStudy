@@ -1,0 +1,25 @@
+server:
+  port: 8010
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator		#如果修改，则监管点访问路径前缀也会改变
+      exposure:
+        include: "*"  #星号代表暴露全部，可以选择暴露部分，填入想暴露的即可
+
+spring:
+  #  注册到服务发现中心的名称
+  application:
+    name: microservice-simple-consumer-movie
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  #   将自己的IP注册到服务发现中心，如果为false，则注册所在操作系统的hostname
+  instance:
+    prefer-ip-address: true
+logging:
+  level:
+    com.lzy.cloud.microservicesimpleconsumermovie.feign.UserFeignClient: DEBUG
